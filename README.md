@@ -13,11 +13,37 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 
 ## Program:
 
+```
+#include <stdio.h>
+#include <string.h>
 
+void xor_enc(char *msg,char *key,char *out,int n){
+    int k=strlen(key);
+    for(int i=0;i<n;i++) out[i]=msg[i]^key[i%k];
+    out[n]=0;
+}
 
+void xor_dec(char *enc,char *key,char *out,int n){ xor_enc(enc,key,out,n); }
+
+int main(){
+    char msg[100],key[100],enc[100],dec[100];
+    printf("***** XOR Encryption/Decryption *****\n");
+    printf("Enter message: "); fgets(msg,sizeof msg,stdin); msg[strcspn(msg,"\n")]=0;
+    printf("Enter key: "); fgets(key,sizeof key,stdin); key[strcspn(key,"\n")]=0;
+    int n=strlen(msg);
+    xor_enc(msg,key,enc,n);
+    printf("Original: %s\nEncrypted(hex): ",msg);
+    for(int i=0;i<n;i++) printf("%02X ",(unsigned char)enc[i]);
+    printf("\n");
+    xor_dec(enc,key,dec,n);
+    printf("Decrypted: %s\n",dec);
+}
+
+```
 
 ## Output:
 
+<img width="703" height="336" alt="Screenshot 2025-11-18 181307" src="https://github.com/user-attachments/assets/8e71df73-c1a3-4500-9415-199f41a04989" />
 
 ## Result:
   The program is executed successfully
